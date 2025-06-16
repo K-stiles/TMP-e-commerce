@@ -1,6 +1,7 @@
 import { Link } from "react-router";
 import type { Product } from "../schemas/product.schema";
 import { useProducts } from "../hooks/api.hook";
+import Header from "../components/header";
 
 export default function Home() {
   const { data: products, isLoading, error } = useProducts();
@@ -10,11 +11,14 @@ export default function Home() {
     return <p className="p-4 text-red-500">Failed to load products.</p>;
 
   return (
-    <div className="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-      {products?.map((product: Product) => (
-        <ProductCard key={product.id} product={product} />
-      ))}
-    </div>
+    <main>
+      <Header />
+      <div className="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        {products?.map((product: Product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
+      </div>
+    </main>
   );
 }
 
