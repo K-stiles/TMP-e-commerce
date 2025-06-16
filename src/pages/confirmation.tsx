@@ -1,12 +1,22 @@
 import { Link, useNavigate } from "react-router";
 import { useCheckoutStore } from "../store/checkout-store";
 import { useCartStore } from "../store/cart-store";
+import {
+  calculateSubtotal,
+  calculateTotal,
+  calculateVAT,
+  SHIPPING_COST,
+} from "../util/helpers";
 
 export default function ConfirmationPage() {
   const { data, clear: clearCheckout } = useCheckoutStore();
-  const { items, total, clearCart } = useCartStore();
+  const { items, clearCart } = useCartStore();
 
   const navigate = useNavigate();
+
+  const subtotal = calculateSubtotal(items);
+  const vat = calculateVAT(subtotal);
+  const grandTotal = calculateTotal(subtotal);
 
   function backToHome() {
     clearCart();
@@ -48,9 +58,19 @@ export default function ConfirmationPage() {
             ))}
           </ul>
         </div>
-        <div className="bg-white px-4 py-3 border-t text-right">
+        <div className="bg-white px-4 py-3 border-t text-right space-y-1">
           <p className="text-sm text-gray-600">
-            Total: <strong>${total().toLocaleString()}</strong>
+            Subtotal: <strong>${subtotal.toLocaleString()}</strong>
+          </p>
+          <p className="text-sm text-gray-600">
+            Shipping: <strong>${SHIPPING_COST}</strong>
+          </p>
+          <p className="text-sm text-gray-600">
+            VAT (20%): <strong>${vat.toLocaleString()}</strong>
+          </p>
+          {/* <p className="text-base font-bold">Subtotal Total: ${total()}</p> */}
+          <p className="text-base font-bold">
+            Grand Total: ${grandTotal.toLocaleString()}
           </p>
         </div>
       </div>

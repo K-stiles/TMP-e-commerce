@@ -1,6 +1,7 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
-interface CheckoutFormData {
+export interface CheckoutFormData {
   name: string;
   email: string;
   phone: string;
@@ -19,8 +20,15 @@ interface CheckoutState {
   clear: () => void;
 }
 
-export const useCheckoutStore = create<CheckoutState>((set) => ({
-  data: null,
-  setData: (data) => set({ data }),
-  clear: () => set({ data: null }),
-}));
+export const useCheckoutStore = create<CheckoutState>()(
+  persist(
+    (set) => ({
+      data: null,
+      setData: (data) => set({ data }),
+      clear: () => set({ data: null }),
+    }),
+    {
+      name: "checkout-storage",
+    }
+  )
+);
