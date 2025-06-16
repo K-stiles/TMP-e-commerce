@@ -1,54 +1,17 @@
-import { Link } from "react-router";
-import type { Product } from "../schemas/product.schema";
-import { useProducts } from "../hooks/api.hook";
-import Header from "../components/header";
+import NavBar from "../components/nav-bar";
+import LandingPage from "../components/landing-page";
 
 export default function Home() {
-  const { data: products, isLoading, error } = useProducts();
-
-  if (isLoading) return <p className="p-4">Loading products...</p>;
-  if (error)
-    return <p className="p-4 text-red-500">Failed to load products.</p>;
-
   return (
-    <main>
-      <Header />
-      <div className="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {products?.map((product: Product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
+    <div className="bg-[var(--neutral-950)] flex min-h-screen w-full flex-col">
+      {/* navbar */}
+      <div className="bg-[var(--neutral-950)]/0 fixed top-0 right-0 left-0 z-50 w-full ">
+        <NavBar />
       </div>
-    </main>
-  );
-}
-
-const ProductCard = ({ product }: { product: Product }) => {
-  return (
-    <div className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition">
-      <Link to={`/products/${product.slug}`}>
-        <img
-          src={product.image.desktop}
-          alt={product.name}
-          className="w-full h-64 object-cover"
-        />
-        <div className="p-4">
-          <p className="text-xs text-gray-500 uppercase tracking-widest">
-            {product.category}
-          </p>
-          <h2 className="text-lg font-semibold mt-1">{product.name}</h2>
-          <p className="text-sm text-gray-600 mt-1">
-            ${product.price.toLocaleString()}
-          </p>
-        </div>
-      </Link>
+      <main className="flex-1 pt-17">
+        <LandingPage />
+      </main>
+      LandingFooter
     </div>
   );
-};
-
-// export default function Home() {
-//   return (
-//     <div className="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-//       <h1>Home page</h1>
-//     </div>
-//   );
-// }
+}
