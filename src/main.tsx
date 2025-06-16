@@ -3,11 +3,11 @@ import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router";
 
 import "./styles/globals.css";
-// import Providers from "./components/providers";
 import Home from "./pages/home";
+import Providers from "./components/providers";
 
 // const Home = lazy(() => import("./pages/home"));
-const Product = lazy(() => import("./pages/products"));
+const ProductDetailsPage = lazy(() => import("./pages/product-details"));
 const Cart = lazy(() => import("./pages/cart"));
 const Checkout = lazy(() => import("./pages/checkout"));
 const Confirmation = lazy(() => import("./pages/confirmation"));
@@ -20,8 +20,8 @@ const router = createBrowserRouter([
     errorElement: <NotFound />,
   },
   {
-    path: "/products/:productId",
-    element: <Product />,
+    path: "/products/:id",
+    element: <ProductDetailsPage />,
   },
   {
     path: "/cart",
@@ -39,10 +39,10 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    {/* <Providers> */}
-    <Suspense fallback={<div className="text-center py-10">Loading...</div>}>
-      <RouterProvider router={router} />
-    </Suspense>
-    {/* </Providers> */}
+    <Providers>
+      <Suspense fallback={<div className="text-center py-10">Loading...</div>}>
+        <RouterProvider router={router} />
+      </Suspense>
+    </Providers>
   </StrictMode>
 );

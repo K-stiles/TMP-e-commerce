@@ -1,41 +1,49 @@
-import { z } from "zod";
+import * as z from "zod";
 
-export const imageSetSchema = z.object({
+const CategoryImageSchema = z.object({
   mobile: z.string(),
   tablet: z.string(),
   desktop: z.string(),
 });
+// type CategoryImage = z.infer<typeof CategoryImageSchema>;
 
-export const includeItemSchema = z.object({
+const GallerySchema = z.object({
+  first: CategoryImageSchema,
+  second: CategoryImageSchema,
+  third: CategoryImageSchema,
+});
+// type Gallery = z.infer<typeof GallerySchema>;
+
+const IncludeSchema = z.object({
   quantity: z.number(),
   item: z.string(),
 });
+// type Include = z.infer<typeof IncludeSchema>;
 
-export const productSchema = z.object({
+const OtherSchema = z.object({
+  slug: z.string(),
+  name: z.string(),
+  image: CategoryImageSchema,
+});
+// type Other = z.infer<typeof OtherSchema>;
+
+export const ProductSchema = z.object({
   id: z.number(),
   slug: z.string(),
   name: z.string(),
-  image: imageSetSchema,
+  image: CategoryImageSchema,
   category: z.string(),
-  categoryImage: imageSetSchema,
+  categoryImage: CategoryImageSchema,
   new: z.boolean(),
   price: z.number(),
   description: z.string(),
   features: z.string(),
-  includes: z.array(includeItemSchema),
-  gallery: z.object({
-    first: imageSetSchema,
-    second: imageSetSchema,
-    third: imageSetSchema,
-  }),
-  others: z.array(
-    z.object({
-      slug: z.string(),
-      name: z.string(),
-      image: imageSetSchema,
-    })
-  ),
+  includes: z.array(IncludeSchema),
+  gallery: GallerySchema,
+  others: z.array(OtherSchema),
 });
 
-export const productListSchema = z.array(productSchema);
-export type Product = z.infer<typeof productSchema>;
+export type Product = z.infer<typeof ProductSchema>;
+
+export const productListingSchema = z.array(ProductSchema);
+export type ProductListing = z.infer<typeof productListingSchema>;
