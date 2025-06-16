@@ -1,10 +1,44 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.tsx'
+import { lazy, StrictMode, Suspense } from "react";
+import { createRoot } from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router";
 
-createRoot(document.getElementById('root')!).render(
+import "./styles/globals.css";
+
+const Home = lazy(() => import("./pages/home"));
+const Product = lazy(() => import("./pages/products"));
+const Cart = lazy(() => import("./pages/cart"));
+const Checkout = lazy(() => import("./pages/checkout"));
+const Confirmation = lazy(() => import("./pages/confirmation"));
+const NotFound = lazy(() => import("./pages/not-found"));
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home />,
+    errorElement: <NotFound />,
+  },
+  {
+    path: "/products/:productId",
+    element: <Product />,
+  },
+  {
+    path: "/cart",
+    element: <Cart />,
+  },
+  {
+    path: "/checkout",
+    element: <Checkout />,
+  },
+  {
+    path: "/confirmation",
+    element: <Confirmation />,
+  },
+]);
+
+createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <App />
-  </StrictMode>,
-)
+    <Suspense fallback={<div className="text-center py-10">Loading...</div>}>
+      <RouterProvider router={router} />
+    </Suspense>
+  </StrictMode>
+);
