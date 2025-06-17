@@ -1,35 +1,19 @@
-import Heading from "./heading";
-import { Button } from "./button";
 import { Link } from "react-router";
 import type { Product } from "../schemas/product.schema";
 import { useProducts } from "../hooks/api.hook";
-import OverlineText from "./overline";
+import Landing from "./landing-page copy";
 
-export default function LandingPage() {
+export default function MainContent() {
   const { data: products, isLoading, error } = useProducts();
 
   if (isLoading) return <p className="p-4">Loading products...</p>;
   if (error) return;
   return (
-    <div>
-      <section className="flex items-center justify-between w-full  px-10">
-        <div className="flex-1 w-1/2">
-          <OverlineText className="text-white">NEW PRODUCT</OverlineText>
-          <Heading size={"h2"}>XX99 Mark II Headphones</Heading>
-          <p className="text-white/70 mt-4 mb-6 w-2/3">
-            Experience natural, lifelike audio and exceptional build quality
-            made for the passionate music enthusiast.
-          </p>
-          <Button className={"bg-[var(--primary)]"}>See Product</Button>
-        </div>
-        <div className="flex-1 w-1/2 ">
-          <img
-            src="/public/images/Bitmap.png"
-            alt="head phone image"
-            className="w-full object-cover"
-          />
-        </div>
+    <>
+      <section className="flex items-center lg:items-start min-h-screen justify-between w-full px-0 md:px-10 bg-background">
+        <Landing />
       </section>
+
       <section>
         <div className="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {products?.map((product: Product) => (
@@ -37,7 +21,7 @@ export default function LandingPage() {
           ))}
         </div>
       </section>
-    </div>
+    </>
   );
 }
 

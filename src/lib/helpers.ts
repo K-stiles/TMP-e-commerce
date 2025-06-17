@@ -11,6 +11,6 @@ export const calculateVAT = (subtotal: number) => {
   return subtotal * VAT_RATE;
 };
 
-export const calculateTotal = (subtotal: number) => {
+export const calculateTotal = (subtotal: number): number => {
   return subtotal + SHIPPING_COST + calculateVAT(subtotal);
 };

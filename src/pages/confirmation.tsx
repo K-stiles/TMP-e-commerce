@@ -6,7 +6,7 @@ import {
   calculateTotal,
   calculateVAT,
   SHIPPING_COST,
-} from "../util/helpers";
+} from "../lib/helpers";
 
 export default function ConfirmationPage() {
   const { data, clear: clearCheckout } = useCheckoutStore();
