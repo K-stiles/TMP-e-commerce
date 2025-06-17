@@ -1,92 +1,13 @@
-import { lazy, StrictMode, Suspense } from "react";
-import { createRoot } from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router";
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './App'
+import { CartProvider } from './components/store/CartContextProvider'
+import './sass/index.scss'
 
-import "./styles/globals.css";
-import Home from "./pages/home";
-import Providers from "./components/providers";
-import AppLayout from "./components/layout/app-layout";
-import HeadphonesPage from "./pages/headphones";
-import SpeakersPage from "./pages/speakers";
-import EarphonesPage from "./pages/earphones";
-
-// const Home = lazy(() => import("./pages/home"));
-const ProductDetailsPage = lazy(() => import("./pages/product-details"));
-const Cart = lazy(() => import("./pages/cart"));
-const Checkout = lazy(() => import("./pages/checkout"));
-const Confirmation = lazy(() => import("./pages/confirmation"));
-const NotFound = lazy(() => import("./pages/not-found"));
-
-const router = createBrowserRouter([
-  // {
-  //   path: "/",
-  //   element: <Home />,
-  //   errorElement: <NotFound />,
-  // },
-  // {
-  //   path: "/products/:id",
-  //   element: <ProductDetailsPage />,
-  // },
-  // {
-  //   path: "/cart",
-  //   element: <Cart />,
-  // },
-  // {
-  //   path: "/checkout",
-  //   element: <Checkout />,
-  // },
-  // {
-  //   path: "/confirmation",
-  //   element: <Confirmation />,
-  // },
-
-  {
-    path: "/",
-    Component: AppLayout,
-    children: [
-      {
-        index: true,
-        element: <Home />,
-        errorElement: <NotFound />,
-      },
-      {
-        path: "/headphones",
-        element: <HeadphonesPage />,
-      },
-      {
-        path: "/speakers",
-        element: <SpeakersPage />,
-      },
-      {
-        path: "/earphones",
-        element: <EarphonesPage />,
-      },
-      {
-        path: "/products/:id",
-        element: <ProductDetailsPage />,
-      },
-      {
-        path: "/cart",
-        element: <Cart />,
-      },
-      {
-        path: "/checkout",
-        element: <Checkout />,
-      },
-      {
-        path: "/confirmation",
-        element: <Confirmation />,
-      },
-    ],
-  },
-]);
-
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <Providers>
-      <Suspense fallback={<div className="text-center py-10">Loading...</div>}>
-        <RouterProvider router={router} />
-      </Suspense>
-    </Providers>
-  </StrictMode>
-);
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+  <React.StrictMode>
+    <CartProvider>
+      <App />
+    </CartProvider>
+  </React.StrictMode>
+)
