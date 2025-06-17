@@ -1,6 +1,8 @@
 import Heading from "./heading";
-import { Button } from "./button";
+import { buttonVariants } from "./button";
 import OverlineText from "./overline";
+import { Link } from "react-router";
+import { cn } from "@/lib/utils";
 
 export default function Landing() {
   return (
@@ -14,7 +16,9 @@ export default function Landing() {
           Experience natural, lifelike audio and exceptional build quality made
           for the passionate music enthusiast.
         </p>
-        <Button className="">See Product</Button>
+        <Link to={"/products"} className={cn(buttonVariants({ size: "lg" }))}>
+          See Product
+        </Link>
       </div>
       <div className="flex-1 w-full order-1 lg:order-2 lg:w-1/2 items-center justify-center flex">
         <img

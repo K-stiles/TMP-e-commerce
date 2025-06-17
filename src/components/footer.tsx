@@ -5,7 +5,7 @@ import { Link } from "react-router";
 
 export default function Footer() {
   return (
-    <div className="text-white w-full py-4 bg-background">
+    <div className="text-white w-full py-4 bg-black-bg">
       <div className="max-w-6xl mx-auto w-full flex space-y-5 flex-col p-4 items-center md:items-start justify-between gap-5">
         <div className="flex flex-col items-center md:items-start justify-between gap-5 lg:flex  lg:justify-between w-full lg:flex-row">
           <Logo className="w-32" />

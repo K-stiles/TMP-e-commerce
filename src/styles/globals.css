@@ -21,7 +21,9 @@ body,
   --neutral-100: hsl(0, 0%, 95%);
   --white: hsl(0, 0%, 100%);
   --neutral-50: hsl(0, 0%, 98%);
-  --background: hsl(0, 0%, 5%);
+  --background: hsl(0, 0%, 100%);
+  --black-bg: hsl(0, 0%, 5%);
+  --category-card-bg: hsl(0, 0%, 95%);
 
   --neutral-950: hsl(0 0% 0%);
 
@@ -59,8 +61,10 @@ body {
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
+  --color-category-card-bg: var(--category-card-bg);
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
+  --color-black-bg: var(--black-bg);
   --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);

@@ -9,7 +9,7 @@ export default function NavBar() {
   const totalQty = items.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
-    <div className="text-white w-full py-4 bg-background">
+    <div className="text-white w-full py-4 bg-black-bg">
       <div className="max-w-6xl mx-auto w-full flex px-4 justify-between items-center border-b-[.1px] border-white/20  py-4">
         <div className="md:hidden">
           <img
