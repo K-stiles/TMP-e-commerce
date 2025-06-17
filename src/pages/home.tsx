@@ -1,5 +1,6 @@
 import NavBar from "../components/nav-bar";
 import MainContent from "../components/main-content";
+import Footer from "@/components/footer";
 
 export default function Home() {
   return (
@@ -10,7 +11,8 @@ export default function Home() {
       <main className="flex-1">
         <MainContent />
       </main>
-      LandingFooter
+
+      <Footer />
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { type Product, type ProductListing } from "../schemas/product.schema";
 
-const API_BASE_URL = "http://localhost:5000";
+const API_BASE_URL = "https://tmp-e-commerce-server.onrender.com";
 
 export const getAllProducts = async (): Promise<ProductListing> => {
   const response = await axios.get<ProductListing>(`${API_BASE_URL}/products`);

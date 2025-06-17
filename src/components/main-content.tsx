@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import type { Product } from "../schemas/product.schema";
 import { useProducts } from "../hooks/api.hook";
-import Landing from "./landing-page copy";
+import Landing from "./landing";
 
 export default function MainContent() {
   const { data: products, isLoading, error } = useProducts();

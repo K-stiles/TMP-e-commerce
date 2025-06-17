@@ -1,17 +1,12 @@
 import { Link } from "react-router";
 import { useCartStore } from "../store/cart-store";
-import Heading from "./heading";
+import { Logo } from "./logo";
+import NavigationLinks from "./navigation-links";
+import { routesLinks } from "@/constats/route-links";
 
 export default function NavBar() {
   const items = useCartStore((state) => state.items);
   const totalQty = items.reduce((sum, item) => sum + item.quantity, 0);
-
-  const routes = [
-    { name: "home", path: "/" },
-    { name: "headphones", path: "/headphones" },
-    { name: "speakers", path: "/speakers" },
-    { name: "earphones", path: "/earphones" },
-  ];
 
   return (
     <div className="text-white w-full py-4 bg-background">
@@ -23,25 +18,11 @@ export default function NavBar() {
             className="size-4 object-contain cursor-pointer"
           />
         </div>
-        <div>
-          <Link to="/" className="">
-            <img
-              src="/images/audiophile-logo.png"
-              alt="logo"
-              className="w-28  object-contain"
-            />
-          </Link>
-        </div>
+
+        <Logo />
+
         <div className="gap-4 items-center hidden md:flex text-white">
-          {routes.map((route) => (
-            <Link
-              key={route.name}
-              to={route.path}
-              className="text-sm font-semibold  hover:text-primary transition-colors ease-in duration-300"
-            >
-              <Heading size={"nav-link"}>{route.name}</Heading>
-            </Link>
-          ))}
+          <NavigationLinks routes={routesLinks} />
         </div>
         <div>
           <Link to="/cart" className="relative">

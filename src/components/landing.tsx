@@ -18,7 +18,7 @@ export default function Landing() {
       </div>
       <div className="flex-1 w-full order-1 lg:order-2 lg:w-1/2 items-center justify-center flex">
         <img
-          src="/public/images/Bitmap.png"
+          src="/images/Bitmap.png"
           alt="head phone image"
           className="w-full h-full object-cover"
         />
