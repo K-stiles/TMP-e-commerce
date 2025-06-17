@@ -65,7 +65,7 @@ export default function MainContent() {
         <div className="max-w-7xl mx-auto">
           <div
             className={cn(
-              "bg-primary rounded-xl grid lg:grid-cols-2 gap-12 items-center ",
+              "bg-primary rounded-xl grid lg:grid-cols-2 gap-12 items-center pb-10 lg:pb-0",
               "bg-no-repeat bg-[length:650px_auto] bg-[position:bottom_0px_left_1.5rem]"
             )}
             style={{ backgroundImage: "url(/images/icons/ovals.png)" }}
@@ -77,9 +77,9 @@ export default function MainContent() {
                 className="w-72 h-auto max-w-md rounded-lg shadow-lg"
               />
             </div>
-            <div className="text-white">
+            <div className="text-white flex flex-col items-center justify-between lg:items-start">
               <Heading className="w-1/3">ZX9 SPEAKER</Heading>
-              <p className="text-lg mb-8 opacity-90 max-w-md">
+              <p className="text-lg mb-8 opacity-90 max-w-md text-center lg:text-start">
                 Upgrade to premium speakers that are phenomenally built to
                 deliver truly remarkable sound.
               </p>
@@ -109,7 +109,7 @@ export default function MainContent() {
             }}
           >
             <div className="relative z-10">
-              <Heading size={"h3"} className="mb-8">
+              <Heading size={"h3"} className="mb-8  text-start">
                 ZX7 SPEAKER
               </Heading>
               <Link
@@ -136,7 +136,10 @@ export default function MainContent() {
             />
           </div>
           <div className="bg-gray-100 p-12 flex flex-col justify-center rounded-xl">
-            <Heading size={"h3"} className="mb-8">
+            <Heading
+              size={"h3"}
+              className="mb-8 lg:text-[40px] lg:leading-[44px] lg:tracking-[1.5px] text-start "
+            >
               YX1 EARPHONES
             </Heading>
             <Link
@@ -153,13 +156,13 @@ export default function MainContent() {
 
       {/* About Section */}
       <section className="py-20 px-6">
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
-          <div className="space-y-6">
-            <Heading size="h2" className=" w-2/3">
+        <div className="max-w-7xl mx-auto flex flex-col gap-16 items-center lg:flex-row">
+          <div className="space-y-6 order-2 lg:order-1 flex flex-col  items-center lg:items-start">
+            <Heading size="h2" className="w-2/3 ">
               BRINGING YOU THE
               <span className="text-primary pl-4">BEST</span> AUDIO GEAR
             </Heading>
-            <p className="text-gray-600 leading-relaxed">
+            <p className="text-gray-600 leading-relaxed text-center lg:text-start w-full lg:w-2/3">
               Located at the heart of New York City, Audiophile is the premier
               store for high end headphones, earphones, speakers, and audio
               accessories. We have a large showroom and luxury demonstration
@@ -169,7 +172,7 @@ export default function MainContent() {
               audio equipment.
             </p>
           </div>
-          <div className="bg-gray-200 h-full rounded-lg  flex items-center justify-center">
+          <div className="bg-gray-200 order-1 lg:order-2 h-full rounded-lg  flex items-center justify-center">
             <img
               src="/images/icons/person.png"
               alt="About Us"
