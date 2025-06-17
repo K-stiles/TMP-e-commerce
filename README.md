@@ -1,16 +1,16 @@
 # 🛒 TMP - E-commence application
 
-A responsive multi-page e-commerce website built with Vite, TypeScript, React, and Tailwind CSS. The project features product browsing, cart management, a checkout form with validation, and order confirmation—all while maintaining a clean and accessible UI.
+A responsive multi-page e-commerce website built with Vite, TypeScript, React, and Sass CSS. The project features product browsing, cart management, a checkout form with validation, and order confirmation—all while maintaining a clean and accessible UI.
 
 ## 🔗 Live Demo
 
-👉 [View Live Site](https://my-vercel-deployment-url-will-be-here.vercel.app)
+👉 [View Live Site](https://tmp-e-commerce.vercel.app/headphones)
 
 ## 🧰 Tech Stack
 
 - ⚡️ [Vite](https://vitejs.dev/) – fast development and build tool
 - ⚛️ [React](https://reactjs.org/) + [TypeScript](https://www.typescriptlang.org/)
-- 🎨 [Tailwind CSS](https://tailwindcss.com/) – utility-first styling
+- 🎨 [Sass CSS](https://sasscss.com/) – styling library
 - 🧭 [React Router DOM](https://reactrouter.com/) – client-side routing
 - 🧠 [Zustand](https://zustand-demo.pmnd.rs/) – global state management (cart)
 - ✅ [React Hook Form](https://react-hook-form.com/) – form handling & validation
