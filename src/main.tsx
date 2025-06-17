@@ -5,6 +5,10 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import "./styles/globals.css";
 import Home from "./pages/home";
 import Providers from "./components/providers";
+import AppLayout from "./components/layout/app-layout";
+import HeadphonesPage from "./pages/headphones";
+import SpeakersPage from "./pages/speakers";
+import EarphonesPage from "./pages/earphones";
 
 // const Home = lazy(() => import("./pages/home"));
 const ProductDetailsPage = lazy(() => import("./pages/product-details"));
@@ -14,26 +18,66 @@ const Confirmation = lazy(() => import("./pages/confirmation"));
 const NotFound = lazy(() => import("./pages/not-found"));
 
 const router = createBrowserRouter([
+  // {
+  //   path: "/",
+  //   element: <Home />,
+  //   errorElement: <NotFound />,
+  // },
+  // {
+  //   path: "/products/:id",
+  //   element: <ProductDetailsPage />,
+  // },
+  // {
+  //   path: "/cart",
+  //   element: <Cart />,
+  // },
+  // {
+  //   path: "/checkout",
+  //   element: <Checkout />,
+  // },
+  // {
+  //   path: "/confirmation",
+  //   element: <Confirmation />,
+  // },
+
   {
     path: "/",
-    element: <Home />,
-    errorElement: <NotFound />,
-  },
-  {
-    path: "/products/:id",
-    element: <ProductDetailsPage />,
-  },
-  {
-    path: "/cart",
-    element: <Cart />,
-  },
-  {
-    path: "/checkout",
-    element: <Checkout />,
-  },
-  {
-    path: "/confirmation",
-    element: <Confirmation />,
+    Component: AppLayout,
+    children: [
+      {
+        index: true,
+        element: <Home />,
+        errorElement: <NotFound />,
+      },
+      {
+        path: "/headphones",
+        element: <HeadphonesPage />,
+      },
+      {
+        path: "/speakers",
+        element: <SpeakersPage />,
+      },
+      {
+        path: "/earphones",
+        element: <EarphonesPage />,
+      },
+      {
+        path: "/products/:id",
+        element: <ProductDetailsPage />,
+      },
+      {
+        path: "/cart",
+        element: <Cart />,
+      },
+      {
+        path: "/checkout",
+        element: <Checkout />,
+      },
+      {
+        path: "/confirmation",
+        element: <Confirmation />,
+      },
+    ],
   },
 ]);
 
