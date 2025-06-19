@@ -3,20 +3,20 @@ import {
   createRoutesFromElements,
   Route,
   RouterProvider,
-} from "react-router-dom";
+} from 'react-router-dom'
 
-import HomeLayout from "./components/Layouts/HomeLayout";
-import ProductDetailsLayout from "./components/Layouts/ProductDetailsLayout";
-import CategoryLayout from "./components/Layouts/CategoryLayout";
-import EarPhones from "./components/pages/EarPhones";
-import HeadPhones from "./components/pages/HeadPhones";
-import Homepage from "./components/pages/Homepage";
-import Speakers from "./components/pages/Speakers";
-import ProductDetail from "./components/shared/ProductDetail";
-import data from "./components/Data/data";
-import PageNotFound from "./components/pages/PageNotFound";
-import Error from "./components/pages/Error";
-import Checkout, { checkoutAction } from "./components/pages/Checkout/Checkout";
+import HomeLayout from './components/Layouts/HomeLayout'
+import ProductDetailsLayout from './components/Layouts/ProductDetailsLayout'
+import CategoryLayout from './components/Layouts/CategoryLayout'
+import EarPhones from './components/pages/EarPhones'
+import HeadPhones from './components/pages/HeadPhones'
+import Homepage from './components/pages/Homepage'
+import Speakers from './components/pages/Speakers'
+import ProductDetail from './components/shared/ProductDetail'
+import data from './components/Data/data'
+import PageNotFound from './components/pages/PageNotFound'
+import Error from './components/pages/Error'
+import Checkout, { checkoutAction } from './components/pages/Checkout/Checkout'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -57,10 +57,9 @@ const router = createBrowserRouter(
       <Route path="*" element={<PageNotFound />} />
     </Route>
   )
-);
-
+)
 function App() {
-  return <RouterProvider router={router} />;
+  return <RouterProvider router={router} />
 }
 
-export default App;
+export default App

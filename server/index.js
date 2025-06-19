@@ -1,111 +1,99 @@
-require('dotenv').config()
+require('dotenv').config();
+const express = require('express');
+const cors = require('cors');
 
-const express = require('express')
-const app = express()
+const app = express();
 
-const cors = require('cors')
-app.use(express.json())
+app.use(express.json());
 app.use(
   cors({
-    origin: [
-      'http://127.0.0.1:5173',
-      'https://tmp-e-commerce.vercel.app',
-    ],
+    origin: ['http://localhost:5173', 'https://tmp-e-commerce.vercel.app'],
     methods: ['GET', 'POST', 'OPTIONS'],
     credentials: true,
   })
-)
-
-const stripe = require('stripe')(process.env.STRIPE_KEY)
-const { Client, resources, Webhook } = require('coinbase-commerce-node')
-
-Client.init(process.env.COINBASE_KEY)
-const { Charge } = resources
-
-const calculateTotal = function (items) {
-  const prices = items.map(item => ({
-    price: item.price.replace(/[^0-9]/g, ''),
-    count: item.count,
-  }))
-  const total = prices.reduce((acc, item) => {
-    return +item.price * item.count + acc
-  }, 0)
-  return total
-}
+);
 
 const storeItems = new Map([
   ['XX99 MK II', { priceInCents: 299900, name: 'XX99 Mark II Headphones' }],
   ['XX99 MK I', { priceInCents: 175000, name: 'XX99 Mark I Headphones' }],
   ['XX59', { priceInCents: 89900, name: 'XX59 Headphones' }],
-  ['ZX9', { priceInCents: 450000, name: 'ZX9 SPEAKER' }],
-  ['ZX7', { priceInCents: 350000, name: 'ZX7 SPEAKER' }],
-  ['YX1', { priceInCents: 59900, name: 'YX1 SPEAKER' }],
-])
+  ['ZX9', { priceInCents: 450000, name: 'ZX9 Speaker' }],
+  ['ZX7', { priceInCents: 350000, name: 'ZX7 Speaker' }],
+  ['YX1', { priceInCents: 59900, name: 'YX1 Speaker' }],
+]);
 
-app.post('/create-checkout', async (req, res) => {
-  try {
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
-      mode: 'payment',
-      line_items: req.body.items.map(item => {
-        const storeItem = storeItems.get(item.id)
-        return {
-          price_data: {
-            currency: 'usd',
-            product_data: {
-              name: storeItem.name,
-            },
-            unit_amount: storeItem.priceInCents,
-          },
-          quantity: item.quantity,
-        }
-      }),
-      success_url: `${process.env.SERVER_URL}/checkout?ordersuccess=true`,
-      cancel_url: `${process.env.SERVER_URL}/checkout?ordersuccess=false`,
-    })
-    res.json({ url: session.url })
-  } catch (e) {
-    res.status(500).json({ error: e.message })
+const calculateTotal = (items) => {
+  return items.reduce((total, item) => {
+    const storeItem = storeItems.get(item.id);
+    if (!storeItem) return total;
+    return total + storeItem.priceInCents * item.quantity;
+  }, 0);
+};
+
+// Unified endpoint for all payment methods
+app.post('/create-order', async (req, res) => {
+  const { items, userName, paymentMethod, eMoneyNumber, eMoneyPin } = req.body;
+
+  if (!items || !userName || !paymentMethod) {
+    return res.status(400).json({ error: 'Missing required fields' });
   }
-})
-app.get('/create-charge', async (req, res) => {
-  const orders = JSON.parse(req.query.params)
-  const userName = req.query.userName
 
-  try {
-    const chargeData = {
-      name: orders
-        .map(val => {
-          return val.name
-        })
-        .join(', '),
-      description: 'Audiophile equipments',
-      local_price: {
-        amount: calculateTotal(orders),
-        currency: 'USD',
-      },
-      pricing_type: 'fixed_price',
-      metadata: {
-        user: userName,
-      },
+  if (!['cash', 'e-money'].includes(paymentMethod)) {
+    return res.status(400).json({ error: 'Invalid payment method' });
+  }
+
+  // Validate e-money details if payment method is e-money
+  if (paymentMethod === 'e-money') {
+    if (!eMoneyNumber || !eMoneyPin) {
+      return res.status(400).json({ error: 'e-Money number and PIN are required' });
     }
-    const charge = await Charge.create(chargeData)
-    res.send(charge)
-  } catch (err) {
-    res.status(400).send(err.message)
+    if (!/^\d{9}$/.test(eMoneyNumber)) {
+      return res.status(400).json({ error: 'e-Money number must be 9 digits' });
+    }
+    if (!/^\d{4}$/.test(eMoneyPin)) {
+      return res.status(400).json({ error: 'e-Money PIN must be 4 digits' });
+    }
   }
-})
-app.get('/webhooks', async (req, res) => {
-  const rawBody = req.rawBody
-  const signature = req.headers['x-cc-webhook-signature']
-  const webhookSecret = process.env.WEBHOOK_SECRET
 
   try {
-    const event = Webhook.verifyEventBody(rawBody, signature, webhookSecret)
-    res.send(`success ${event.id}`)
-  } catch (err) {
-    res.status(400).send('failure!')
-  }
-})
+    const orderSummary = items.map(item => {
+      const storeItem = storeItems.get(item.id);
+      if (!storeItem) throw new Error(`Invalid item: ${item.id}`);
+      return {
+        name: storeItem.name,
+        quantity: item.quantity,
+        price: storeItem.priceInCents,
+      };
+    });
 
-app.listen(3000)
+    const total = calculateTotal(items);
+    const orderNumber = `ORD-${Date.now().toString().slice(-6)}`;
+
+    console.log(`🧾 New order #${orderNumber} from ${userName}`);
+    console.log(`💳 Payment method: ${paymentMethod}`);
+    if (paymentMethod === 'e-money') {
+      console.log(`🔢 e-Money number: ${eMoneyNumber}`);
+      // Simulated process the e-money payment 
+      console.log('✅ Simulated e-Money payment processed');
+    }
+
+    const successUrl = `${process.env.SERVER_URL || 'https://tmp-e-commerce.vercel.app'}/checkout?ordersuccess=true&orderNumber=${orderNumber}`;
+
+    res.json({
+      url: successUrl,
+      orderNumber,
+      summary: orderSummary,
+      total,
+      userName,
+      paymentMethod,
+      status: paymentMethod === 'cash' ? 'pending_payment' : 'paid'
+    });
+  } catch (error) {
+    console.error('❌ Order processing error:', error.message);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.listen(3000, () => {
+  console.log('✅ Checkout server running on http://localhost:3000');
+});

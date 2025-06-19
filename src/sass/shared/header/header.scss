@@ -1,4 +1,4 @@
-@use "../../variables" as *;
+@use '../../variables' as *;
 
 .header {
   background-color: #191919;
@@ -69,7 +69,7 @@
         isolation: isolate;
 
         &::after {
-          content: "";
+          content: '';
           position: absolute;
           inset: auto auto 3px 0;
           width: 0;

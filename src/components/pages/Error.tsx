@@ -1,33 +1,55 @@
-import React from "react";
-import { Link, NavLink, useNavigate, useRouteError } from "react-router-dom";
+import React from 'react';
+import { NavLink, useNavigate, useRouteError } from 'react-router-dom';
+import clockIcon from '../../assets/error/material-symbols_nest-clock-farsight-analog-outline.svg';
+import '../../sass/pages/error.scss';
 
-import "../../sass/pages/error.scss";
-import backArrow from "../../assets/error/Icon.svg";
-
-const Error: React.FC = function () {
-  const error: any = useRouteError();
+const Error: React.FC = () => {
+  const error = useRouteError() as { message?: string };
   const navigate = useNavigate();
-  const date = new Date();
+  const today = new Date().toLocaleDateString('en-GB');
 
-  const today = `${date.getDate()}/${
-    date.getMonth() + 1
-  }/${date.getFullYear()}`;
   return (
-    <div className="not-found">
-      <h1 className="not-found__title">400 – Oops an Error Occured</h1>
-      <p className="not-found__message">
-        {error.statusText ||
-          error.message ||
-          "An unexpected error has occurred."}
-      </p>
-
-      <Link to="/" replace>
-        <button>
-          <img src={backArrow} alt="back" />
-          Back to home
+    <main className="error-layout">
+      <header className="error-header">
+        <button className="btn-home" onClick={() => navigate('/')}>
+          ⬅ Home
         </button>
-      </Link>
-    </div>
+        <nav className="error-nav">
+          {['headphones', 'speakers', 'earphones'].map((item) => (
+            <NavLink key={item} to={`/${item}`} className="error-link">
+              {item}
+            </NavLink>
+          ))}
+        </nav>
+      </header>
+
+      <section className="error-body">
+        <div className="error-text">
+          <h1>We're experiencing a hiccup 🤕</h1>
+          <p>
+            Something broke on our side. Sit tight or try refreshing.
+          </p>
+          <button className="btn-alert" onClick={() => alert('Developer has been alerted.')}>
+            Notify Dev 💻
+          </button>
+        
+        </div>
+        <div className="error-graphic">
+         
+        </div>
+      </section>
+
+      <footer className="error-footer">
+        <div className="error-date">
+          <img src={clockIcon} alt="Clock" />
+          <span>{today}</span>
+        </div>
+        <div className="error-info">
+          <strong>Details:</strong>
+          <pre>{error?.message || 'Something unexpected happened.'}</pre>
+        </div>
+      </footer>
+    </main>
   );
 };
 

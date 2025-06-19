@@ -1,14 +1,12 @@
-@use "resets";
-@use "variables" as v;
-
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&display=swap");
+@use 'resets';
+@use 'variables' as v;
 
 body,
 html {
   scroll-behavior: smooth;
 }
 body {
-  font-family: "Manrope", sans-serif;
+  font-family: 'Manrope', 'Nunito', Verdana, Geneva, Tahoma, sans-serif;
   position: relative;
 }
 img:not(header img) {
