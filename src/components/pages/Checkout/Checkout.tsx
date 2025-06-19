@@ -62,11 +62,14 @@ export const checkoutAction = async function ({
   }
 
   try {
-    const res = await fetch("https://tmp-e-commerce.vercel.app/create-order", {
+    const res = await fetch("https://azubi-challenge.vercel.app/create-order", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        items: params.map((item) => ({ id: item.name, quantity: item.count })),
+        items: params.map((item) => ({
+          id: item.name,
+          quantity: item.count,
+        })),
         userName: formDataObj.name,
         paymentMethod: formDataObj.paymentMethod,
         ...(formDataObj.paymentMethod === "e-money" && {
